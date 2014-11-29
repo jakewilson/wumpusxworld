@@ -2,6 +2,7 @@ package wumpusworld;
 
 /**
  * Cell.java
+ * 
  * @author Jake Wilson
  * @version Nov 28, 2014
  */
@@ -21,7 +22,7 @@ public class Cell {
    * Constructs and initializes a new Cell with EMPTY content
    */
   public Cell() {
-    content = EMPTY;
+    emptyCell();
   }
   
   /**
@@ -30,6 +31,22 @@ public class Cell {
    */
   public void addContent(int c) {
     content += c;
+  }
+  
+  /**
+   * Sets the content of the cell to EMPTY
+   */
+  public void emptyCell() {
+    content = EMPTY;
+  }
+  
+  /**
+   * Returns true if the cell contains p
+   * @param p the percept to test
+   * @return true if the cell contains p
+   */
+  public boolean contains(int p) {
+    return (content & p) != 0;
   }
   
   /**
