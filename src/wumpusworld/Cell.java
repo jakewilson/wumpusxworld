@@ -30,7 +30,8 @@ public class Cell {
    * @param c the content to add
    */
   public void addContent(int c) {
-    content += c;
+    if (!contains(c))
+      content += c;
   }
   
   /**
@@ -55,6 +56,13 @@ public class Cell {
    */
   public int getContent() {
     return content;
+  }
+  
+  /**
+   * Returns the content of the cell
+   */
+  public String toString() {
+    return String.format("%2d", content);
   }
 
 }

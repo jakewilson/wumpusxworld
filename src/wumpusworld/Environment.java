@@ -42,11 +42,16 @@ public class Environment {
    * a wumpus or gold, and is not the starting cell can contain a pit with
    * P(.2)
    */
-  private void generateMap() {
+  public void generateMap() {
     if (!mapGenerated) { // ensure we only generate the map once
       // generate exactly one wumpus
-      int wX = (int)(Math.random() * 4);
-      int wY = (int)(Math.random() * 4);
+      int wX, wY;
+      
+      do {
+        wX = (int)(Math.random() * 4);
+        wY = (int)(Math.random() * 4);
+      } while (!validWumpusCoord(wX, wY));
+      
       map[wX][wY].addContent(Cell.WUMPUS);
       addAdjacentPercepts(wX, wY, Cell.STENCH);
       
@@ -54,10 +59,12 @@ public class Environment {
       map[(int)(Math.random() * 4)][(int)(Math.random() * 4)].addContent(Cell.GLITTER);
       
       // generate a pit on every cell that doesn't contain gold or a wumpus
+      // with p = .2
       for (int i = 0; i < map.length; i++) {
         for (int j = 0; j < map[i].length; j++) {
           if (!map[i][j].contains(Cell.WUMPUS) && !map[i][j].contains(Cell.GLITTER)) {
-            if (Math.random() < 0.2) {
+            if (Math.random() <= 0.2 && validPitCoord(i, j)) {
+              System.out.println(i + " " + j);
               map[i][j].addContent(Cell.PIT);
               addAdjacentPercepts(i, j, Cell.BREEZE);
             }
@@ -67,6 +74,26 @@ public class Environment {
       
       mapGenerated = true;
     }
+  }
+  
+  /**
+   * Returns whether the coordinate (x,y) is allowed to have a pit
+   * @param x the x coordinate
+   * @param y the y coordinate
+   * @return whether the coordinate (x,y) is allowed to have a pit
+   */
+  private boolean validPitCoord(int x, int y) {
+    return validWumpusCoord(x, y);
+  }
+  
+  /**
+   * Returns whether the coordinate (x,y) is allowed to have a wumpus
+   * @param x the x coordinate
+   * @param y the y coordinate
+   * @return whether the coordinate (x,y) is allowed to have a wumpus
+   */
+  private boolean validWumpusCoord(int x, int y) {
+    return !(x == 0 && y == 0) && !(x == 0 && y == 1) && !(x == 1 && y == 0);
   }
   
   /**
@@ -90,6 +117,35 @@ public class Environment {
    */
   private boolean outOfBounds(int x, int y) {
     return (x < 0 || x >= size) || (y < 0 || y >= size);
+  }
+  
+  /**
+   * Returns the appropriate number of dashes for the environment toString()
+   * @return
+   */
+  private String getDashes() {
+    String str = "";
+    for (int i = 0; i <= (size * 3); i++) {
+      str += "-";
+    }
+    
+    return str + "\n";
+  }
+  
+  /**
+   * Returns the map of the environment in string form
+   */
+  public String toString() {
+    String str = getDashes();
+    for (int i = 0; i < size; i++) {
+      str += "|";
+      for (int j = 0; j < size; j++) {
+        str += map[i][j].toString() + "|";
+      }
+      str += "\n" + getDashes();
+    }
+    
+    return str;
   }
 
 }
