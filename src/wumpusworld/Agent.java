@@ -10,8 +10,9 @@ public class Agent {
   
   private Cell[][] knownMap;
   private Environment env;
-  private boolean hasArrow;
+  private boolean hasArrow, hasGold;
   private int currentX, currentY;
+  private int prevX, prevY;
   private int performanceMeasure;
   private int time;
   private int orientation;
@@ -42,7 +43,9 @@ public class Agent {
     knownMap = new Cell[e.getSize()][e.getSize()];
     Environment.initMap(knownMap);
     hasArrow = true;
+    hasGold = false;
     currentX = currentY = performanceMeasure = time = 0;
+    prevX = prevY = 0;
     orientation = ORIENTATION_EAST;
   }
   
@@ -51,7 +54,9 @@ public class Agent {
    * @param a the action to take
    * @return the percept of the cell the agent is at
    */
-  public int takeAction(int a) {
+  public Percept takeAction(int a) {
+    prevX = currentX;
+    prevY = currentY;
     switch (a) {
       case ACTION_FORWARD:
         switch (orientation) {
@@ -70,8 +75,12 @@ public class Agent {
         }
         break;
       case ACTION_TURN_LEFT:
+        orientation--;
+        if (orientation == 0) orientation = ORIENTATION_WEST;
         break;
       case ACTION_TURN_RIGHT:
+        orientation++;
+        if (orientation == 5) orientation = ORIENTATION_NORTH;
         break;
       case ACTION_SHOOT:
         break;
@@ -80,7 +89,7 @@ public class Agent {
       case ACTION_CLIMB:
         break;
       default: // should be impossible
-        return -1;
+        return null;
     }
     return env.getPercept(currentY, currentX);
   }

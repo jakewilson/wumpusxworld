@@ -51,11 +51,16 @@ public class Environment {
    * @param y the y coordinate of the cell
    * @return the percept of the cell at (x,y) or -1 if (x,y) is out of bounds
    */
-  public int getPercept(int y, int x) {
-    if (!outOfBounds(x, y))
-      return map[y][x].getContent();
-    
-    return -1;
+  public Percept getPercept(int y, int x) {
+    if (outOfBounds(x, y)) {
+      return new Percept(Percept.PERCEPT_BUMP);
+    }
+    int p = 0;
+    Cell c = map[y][x];
+    if (c.contains(Cell.BREEZE)) p += Percept.PERCEPT_BREEZE;
+    if (c.contains(Cell.STENCH)) p += Percept.PERCEPT_STENCH;
+    if (c.contains(Cell.GLITTER)) p += Percept.PERCEPT_GLITTER;
+    return new Percept(p);
   }
   
   /**

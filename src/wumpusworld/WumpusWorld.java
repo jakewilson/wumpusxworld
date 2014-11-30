@@ -14,9 +14,9 @@ public class WumpusWorld {
     e.generateMap();
     System.out.println(e);
     Agent a = new Agent(e);
-    int percept;
-    while ((percept = a.takeAction(Agent.ACTION_FORWARD)) != -1) {
-      System.out.println("Percept: " + percept + " " + a);
+    Percept p;
+    while ((p = a.takeAction(Agent.ACTION_FORWARD)).bump() == false) {
+      System.out.println("Percept: " + p + " " + a);
     }
   }
 

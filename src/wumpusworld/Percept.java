@@ -66,6 +66,24 @@ public class Percept {
   public boolean stench() {
     return (percept & PERCEPT_STENCH) != 0;
   }
+  
+  /**
+   * Returns this percept in list format
+   */
+  public String toString() {
+    String str = "[";
+    str += stench() ? "Stench" : "None";
+    str += ", ";
+    str += breeze() ? "Breeze" : "None";
+    str += ", ";
+    str += glitter() ? "Glitter" : "None";
+    str += ", ";
+    str += bump() ? "Bump" : "None";
+    str += ", ";
+    str += scream() ? "Scream" : "None";
+    str += ",].";
+    return str;
+  }
 
 }
 
