@@ -91,6 +91,8 @@ public class Agent {
       default: // should be impossible
         return null;
     }
+    // subtract one for every action taken
+    performanceMeasure--;
     Percept p = env.getPercept(currentY, currentX);
     if (p.bump()) {
       currentX = prevX;
