@@ -51,9 +51,9 @@ public class Environment {
    * @param y the y coordinate of the cell
    * @return the percept of the cell at (x,y) or -1 if (x,y) is out of bounds
    */
-  public int getPercept(int x, int y) {
+  public int getPercept(int y, int x) {
     if (!outOfBounds(x, y))
-      return map[x][y].getContent();
+      return map[y][x].getContent();
     
     return -1;
   }

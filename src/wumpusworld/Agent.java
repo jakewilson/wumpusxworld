@@ -56,16 +56,16 @@ public class Agent {
       case ACTION_FORWARD:
         switch (orientation) {
           case ORIENTATION_NORTH:
-            currentX--;
+            currentY--;
             break;
           case ORIENTATION_EAST:
-            currentY++;
-            break;
-          case ORIENTATION_SOUTH:
             currentX++;
             break;
+          case ORIENTATION_SOUTH:
+            currentY++;
+            break;
           case ORIENTATION_WEST:
-            currentY--;
+            currentX--;
             break;
         }
         break;
@@ -82,7 +82,7 @@ public class Agent {
       default: // should be impossible
         return -1;
     }
-    return env.getPercept(currentX, currentY);
+    return env.getPercept(currentY, currentX);
   }
   
   /**
