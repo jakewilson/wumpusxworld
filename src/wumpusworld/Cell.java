@@ -22,7 +22,7 @@ public class Cell {
    * Constructs and initializes a new Cell with EMPTY content
    */
   public Cell() {
-    emptyCell();
+    content = EMPTY;
   }
   
   /**
@@ -32,13 +32,6 @@ public class Cell {
   public void addContent(int c) {
     if (!contains(c))
       content += c;
-  }
-  
-  /**
-   * Sets the content of the cell to EMPTY
-   */
-  public void emptyCell() {
-    content = EMPTY;
   }
   
   /**
