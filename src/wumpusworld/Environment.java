@@ -30,7 +30,7 @@ public class Environment {
     map  = new Cell[s][s];
     size = s;
     mapGenerated = false;
-    initMap();
+    initMap(map);
     envCreated = true;
   }
   
@@ -46,13 +46,28 @@ public class Environment {
   }
   
   /**
+   * Returns the percept of the cell at (x,y)
+   * @param x the x coordinate of the cell
+   * @param y the y coordinate of the cell
+   * @return the percept of the cell at (x,y) or -1 if (x,y) is out of bounds
+   */
+  public int getPercept(int x, int y) {
+    if (!outOfBounds(x, y))
+      return map[x][y].getContent();
+    
+    return -1;
+  }
+  
+  /**
    * Initializes every cell in the map to a new cell
    */
-  private void initMap() {
+  public static void initMap(Cell[][] map) {
     for (int i = 0; i < map.length; i++)
       for (int j = 0; j < map[i].length; j++)
         map[i][j] = new Cell();
   }
+  
+//  public Percept 
   
   /**
    * Generates the map of the environment. There is exactly one wumpus
@@ -138,6 +153,14 @@ public class Environment {
   }
   
   /**
+   * Returns the size of the map
+   * @return
+   */
+  public int getSize() {
+    return size;
+  }
+  
+  /**
    * Returns the appropriate number of dashes for the environment toString()
    * @return
    */
@@ -147,14 +170,6 @@ public class Environment {
       str += "-";
     
     return str + "\n";
-  }
-  
-  /**
-   * Returns the size of the map
-   * @return
-   */
-  public int getSize() {
-    return size;
   }
   
   /**
