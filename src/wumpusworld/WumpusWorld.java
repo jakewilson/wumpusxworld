@@ -9,10 +9,10 @@ package wumpusworld;
  */
 public class WumpusWorld {
   
-  public static final int SIZE = 4;
+  
   
   public static void main(String[] args) {
-    Environment e = new Environment(SIZE);
+    Environment e = Environment.getEnvironment();
     e.generateMap();
     System.out.println(e);
   }

@@ -15,16 +15,34 @@ public class Environment {
   
   private boolean mapGenerated;
   
+  private static boolean envCreated = false;
+  
+  public static final int SIZE = 4;
+  
+  private static Environment e;
+  
   /**
    * Constructs and initializes a new Environment with a map size
    * equal to s
    * @param s the length and width of the map
    */
-  public Environment(int s) {
+  private Environment(int s) {
     map  = new Cell[s][s];
     size = s;
     mapGenerated = false;
     initMap();
+    envCreated = true;
+  }
+  
+  /**
+   * Ensures only one environment can be created
+   * @return the environment
+   */
+  public static Environment getEnvironment() {
+    if (!envCreated)
+      return e = new Environment(SIZE);
+    
+    return e;
   }
   
   /**
@@ -125,11 +143,18 @@ public class Environment {
    */
   private String getDashes() {
     String str = "";
-    for (int i = 0; i <= (size * 3); i++) {
+    for (int i = 0; i <= (size * 3); i++)
       str += "-";
-    }
     
     return str + "\n";
+  }
+  
+  /**
+   * Returns the size of the map
+   * @return
+   */
+  public int getSize() {
+    return size;
   }
   
   /**
