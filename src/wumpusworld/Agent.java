@@ -91,7 +91,12 @@ public class Agent {
       default: // should be impossible
         return null;
     }
-    return env.getPercept(currentY, currentX);
+    Percept p = env.getPercept(currentY, currentX);
+    if (p.bump()) {
+      currentX = prevX;
+      currentY = prevY;
+    }
+    return p;
   }
   
   /**

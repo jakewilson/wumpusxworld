@@ -81,7 +81,7 @@ public class Percept {
     str += bump() ? "Bump" : "None";
     str += ", ";
     str += scream() ? "Scream" : "None";
-    str += ",].";
+    str += ",]";
     return str;
   }
 

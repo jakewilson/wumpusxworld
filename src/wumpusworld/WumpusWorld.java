@@ -18,6 +18,11 @@ public class WumpusWorld {
     while ((p = a.takeAction(Agent.ACTION_FORWARD)).bump() == false) {
       System.out.println("Percept: " + p + " " + a);
     }
+    a.takeAction(Agent.ACTION_TURN_RIGHT);
+    while ((p = a.takeAction(Agent.ACTION_FORWARD)).bump() == false) {
+      System.out.println("Percept: " + p + " " + a);
+    }
+    
   }
 
 }

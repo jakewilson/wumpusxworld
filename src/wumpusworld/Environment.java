@@ -52,9 +52,9 @@ public class Environment {
    * @return the percept of the cell at (x,y) or -1 if (x,y) is out of bounds
    */
   public Percept getPercept(int y, int x) {
-    if (outOfBounds(x, y)) {
+    if (outOfBounds(x, y))
       return new Percept(Percept.PERCEPT_BUMP);
-    }
+    
     int p = 0;
     Cell c = map[y][x];
     if (c.contains(Cell.BREEZE)) p += Percept.PERCEPT_BREEZE;
