@@ -123,6 +123,22 @@ public class Agent {
   }*/
   
   /**
+   * Returns the x coordinate of the Agent
+   * @return the x coordinate of the Agent
+   */
+  public int getX() {
+    return currentX;
+  }
+  
+  /**
+   * Returns the y coordinate of the Agent
+   * @return the y coordinate of the Agent
+   */
+  public int getY() {
+    return currentY;
+  }
+  
+  /**
    * Returns the coordinate of the Agent
    */
   public String toString() {
