@@ -73,20 +73,6 @@ public class Agent {
     prevY = currentY;
     switch (a) {
       case ACTION_FORWARD:
-        switch (orientation) {
-          case ORIENTATION_NORTH:
-            currentY--;
-            break;
-          case ORIENTATION_EAST:
-            currentX++;
-            break;
-          case ORIENTATION_SOUTH:
-            currentY++;
-            break;
-          case ORIENTATION_WEST:
-            currentX--;
-            break;
-        }
         break;
       case ACTION_TURN_LEFT:
         orientation--;
