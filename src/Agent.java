@@ -63,7 +63,7 @@ public class Agent {
    * Gets the KnowledgeBase that the agent currently has
    * @return KnowledgeBase kb
    */
-  public KnowledgeBase getKnowledgeBase(){
+  public KnowledgeBase getKnowledgeBase() {
     return kb;
   }
 
@@ -74,27 +74,35 @@ public class Agent {
     System.out.println("(" + currentX + "," + currentY + ")");
     switch (nextAction) {
       case ACTION_MOVE_NORTH:
+        System.out.println("Moving north");
         currentY--;
         break;
       case ACTION_MOVE_EAST:
+        System.out.println("Moving east");
         currentX++;
         break;
       case ACTION_MOVE_SOUTH:
+        System.out.println("Moving south");
         currentY++;
         break;
       case ACTION_MOVE_WEST:
+        System.out.println("Moving west");
         currentX--;
         break;
       case ACTION_SHOOT:
+        System.out.println("Shooting wumpus");
         break;
       case ACTION_GRAB:
+        System.out.println("Grabbing gold");
         hasGold = true;
         break;
       case ACTION_CLIMB:
+        System.out.println("Climbing from cave.");
         break;
       default: // should be impossible
         break;
     }
+    performanceMeasure--;
   }
   
   /**

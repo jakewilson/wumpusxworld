@@ -14,6 +14,7 @@ public class KnowledgeBase {
   private int[][] map;
   private int size;
   private int agentX, agentY;
+  private int potentialWumpusCount;
   public WumpusGraphics wg;
 
   /** Possible states of a cell */
@@ -28,6 +29,7 @@ public class KnowledgeBase {
   private boolean foundWumpus;
   private boolean foundGold;
   private boolean grabbedGold;
+  private boolean wumpusDead;
 
   /**
    * Constructs and initializes a new KnowledgeBase with
@@ -39,8 +41,9 @@ public class KnowledgeBase {
     breeze = new boolean[s][s];
     stench = new boolean[s][s];
     map = new int[s][s];
-    foundWumpus = foundGold = grabbedGold = false;
+    foundWumpus = foundGold = grabbedGold = wumpusDead = false;
     agentX = agentY = 0;
+    potentialWumpusCount = 0;
   }
 
   /**
@@ -48,28 +51,27 @@ public class KnowledgeBase {
    * @return the Agents next Action
    */
   public int ask() {
+    Point p;
     if (foundGold && !grabbedGold) {
       grabbedGold = true;
       return Agent.ACTION_GRAB;
+    }
+    if (foundWumpus && !wumpusDead) {
+      System.out.println("Need to kill the wumpus");
+      // TODO shoot the wumpus
     }
     if (grabbedGold) {
       System.out.println("Find way back home");
       // TODO find path back home
       // TODO climb out if we are home
+      p = new Point(0,0);
+    } else {
+      // if none of the above, just move to the next
+      // safe square
+      p = findNextSafeUnvisitedCell();
     }
-    if (foundWumpus) {
-      System.out.println("Find way back home");
-      // TODO shoot the wumpus
-    }
-    // if none of the above, just move to the next
-    // safe square
-    Point p = findNextSafeUnvisitedCell();
 
     System.out.println("Next safe cell: " + p);
-
-    if (p == null) {
-      System.out.println("There are no more safe unvisited cells");
-    }
 
     if (p.x - agentX > 0)
       return Agent.ACTION_MOVE_EAST;
@@ -94,7 +96,7 @@ public class KnowledgeBase {
         if ((map[i][j] & SAFE) != 0 && (map[i][j] & VISITED) == 0)
           return new Point(j, i);
 
-    return null;
+    return new Point(0, 0);
   }
 
   /**
@@ -115,12 +117,26 @@ public class KnowledgeBase {
     if (!p.breeze() && !p.stench()) {
       // if no stench or breeze in the current cell, all adj cells are safe
       markAdjCells(x, y, SAFE);
-    } else if (p.breeze() && !p.stench()) {
+    }
+    if (p.breeze()) {
       markAdjCells(x, y, POTENTIAL_PIT);
-    } else if (!p.breeze() && p.stench()) {
+    }
+    if (p.stench()) {
       markAdjCells(x, y, POTENTIAL_WUMPUS);
-    } else if (p.breeze() && p.stench()) {
-      markAdjCells(x, y, POTENTIAL_WUMPUS + POTENTIAL_PIT);
+    }
+    if (potentialWumpusCount == 1) {
+      // find the potential wumpus and change it to wumpus
+      System.out.println("Found the wumpus!");
+      foundWumpus = true;
+      for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+          if (contains(map[i][j], POTENTIAL_WUMPUS)) {
+            map[i][j] -= POTENTIAL_WUMPUS;
+            map[i][j] += WUMPUS;
+            break;
+          }
+        }
+      }
     }
     foundGold = p.glitter();
     wg.renderKnowledgeBaseMap(map);
@@ -135,14 +151,38 @@ public class KnowledgeBase {
    * @param state the state of the cell
    */
   private void markAdjCells(int x, int y, int state) {
-    if (!outOfBounds(y + 1, x) && !contains(map[y + 1][x], SAFE) && !contains(map[y + 1][x], state))
-      map[y + 1][x] += state;
-    if (!outOfBounds(y - 1, x) && !contains(map[y - 1][x], SAFE) && !contains(map[y - 1][x], state))
-      map[y - 1][x] += state;
-    if (!outOfBounds(y, x + 1) && !contains(map[y][x + 1], SAFE) && !contains(map[y][x + 1], state))
-      map[y][x + 1] += state;
-    if (!outOfBounds(y, x - 1) && !contains(map[y][x - 1], SAFE) && !contains(map[y][x - 1], state))
-      map[y][x - 1] += state;
+    if (!outOfBounds(y + 1, x) && !contains(map[y + 1][x], SAFE) && !contains(map[y + 1][x], state)) {
+      if (state == SAFE) {
+        map[y + 1][x] = state;
+      } else {
+        map[y + 1][x] += state;
+      }
+      if (state == POTENTIAL_WUMPUS) potentialWumpusCount++;
+    }
+    if (!outOfBounds(y - 1, x) && !contains(map[y - 1][x], SAFE) && !contains(map[y - 1][x], state)) {
+      if (state == SAFE) {
+        map[y - 1][x] = state;
+      } else {
+        map[y - 1][x] += state;
+      }
+      if (state == POTENTIAL_WUMPUS) potentialWumpusCount++;
+    }
+    if (!outOfBounds(y, x + 1) && !contains(map[y][x + 1], SAFE) && !contains(map[y][x + 1], state)) {
+      if (state == SAFE) {
+        map[y][x + 1] = state;
+      } else {
+        map[y][x + 1] += state;
+      }
+      if (state == POTENTIAL_WUMPUS) potentialWumpusCount++;
+    }
+    if (!outOfBounds(y, x - 1) && !contains(map[y][x - 1], SAFE) && !contains(map[y][x - 1], state)) {
+      if (state == SAFE) {
+        map[y][x - 1] = state;
+      } else {
+        map[y][x - 1] += state;
+      }
+      if (state == POTENTIAL_WUMPUS) potentialWumpusCount++;
+    }
   }
 
   /**

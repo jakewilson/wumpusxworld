@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * WumpusWorld.java
  * 
@@ -15,17 +17,13 @@ public class WumpusWorld {
     Agent a = new Agent(e);
     a.getKnowledgeBase().wg = wg;
 
-    System.out.println(a.senseEnv());
-    a.getNextAction();
-    a.takeAction();
-
-    System.out.println(a.senseEnv());
-    a.getNextAction();
-    a.takeAction();
-
-    System.out.println(a.senseEnv());
-    a.getNextAction();
-    a.takeAction();
+    Scanner input = new Scanner(System.in);
+    String line = "";
+    while (!(line = input.nextLine()).equals("q")) {
+      System.out.println(a.senseEnv());
+      a.getNextAction();
+      a.takeAction();
+    }
   }
 
 }
