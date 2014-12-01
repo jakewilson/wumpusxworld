@@ -91,6 +91,8 @@ public class Agent {
         break;
       case ACTION_SHOOT:
         System.out.println("Shooting wumpus");
+        env.shootWumpus(kb.getWumpusX(), kb.getWumpusY());
+        performanceMeasure -= 10;
         break;
       case ACTION_GRAB:
         System.out.println("Grabbing gold");

@@ -56,7 +56,6 @@ public class KnowledgeBase {
     }
     if (foundWumpus && !wumpusDead) {
       System.out.println("Need to kill the wumpus");
-      // TODO shoot the wumpus
       return Agent.ACTION_SHOOT;
     }
     if (grabbedGold) {
@@ -70,6 +69,10 @@ public class KnowledgeBase {
       // if none of the above, just move to the next
       // safe square
       p = findNextSafeUnvisitedCell();
+      // if the only safe cell left is (0,0) and the agent is there,
+      // we are climbing out
+      if (p.x == 0 && p.y == 0 && agentX == 0 && agentY == 0)
+        return Agent.ACTION_CLIMB;
     }
 
     System.out.println("Next safe cell: " + p);
@@ -142,6 +145,8 @@ public class KnowledgeBase {
           if (contains(map[i][j], POTENTIAL_WUMPUS)) {
             map[i][j] -= POTENTIAL_WUMPUS;
             map[i][j] += WUMPUS;
+            wumpusX = j;
+            wumpusY = i;
             break;
           }
         }
@@ -181,6 +186,10 @@ public class KnowledgeBase {
    */
   private void markAdjCells(int x, int y, int state) {
     if (!outOfBounds(y + 1, x) && !contains(map[y + 1][x], SAFE) && !contains(map[y + 1][x], state)) {
+      if (state != POTENTIAL_WUMPUS && contains(map[y + 1][x], POTENTIAL_WUMPUS)) {
+        map[y + 1][x] -= POTENTIAL_WUMPUS;
+        potentialWumpusCount--;
+      }
       if (state == SAFE) {
         map[y + 1][x] = state;
       } else {
@@ -189,6 +198,10 @@ public class KnowledgeBase {
       if (state == POTENTIAL_WUMPUS) potentialWumpusCount++;
     }
     if (!outOfBounds(y - 1, x) && !contains(map[y - 1][x], SAFE) && !contains(map[y - 1][x], state)) {
+      if (state != POTENTIAL_WUMPUS && contains(map[y - 1][x], POTENTIAL_WUMPUS)) {
+        map[y - 1][x] -= POTENTIAL_WUMPUS;
+        potentialWumpusCount--;
+      }
       if (state == SAFE) {
         map[y - 1][x] = state;
       } else {
@@ -197,6 +210,10 @@ public class KnowledgeBase {
       if (state == POTENTIAL_WUMPUS) potentialWumpusCount++;
     }
     if (!outOfBounds(y, x + 1) && !contains(map[y][x + 1], SAFE) && !contains(map[y][x + 1], state)) {
+      if (state != POTENTIAL_WUMPUS && contains(map[y][x + 1], POTENTIAL_WUMPUS)) {
+        map[y][x + 1] -= POTENTIAL_WUMPUS;
+        potentialWumpusCount--;
+      }
       if (state == SAFE) {
         map[y][x + 1] = state;
       } else {
@@ -205,6 +222,10 @@ public class KnowledgeBase {
       if (state == POTENTIAL_WUMPUS) potentialWumpusCount++;
     }
     if (!outOfBounds(y, x - 1) && !contains(map[y][x - 1], SAFE) && !contains(map[y][x - 1], state)) {
+      if (state != POTENTIAL_WUMPUS && contains(map[y][x - 1], POTENTIAL_WUMPUS)) {
+        map[y][x - 1] -= POTENTIAL_WUMPUS;
+        potentialWumpusCount--;
+      }
       if (state == SAFE) {
         map[y][x - 1] = state;
       } else {
