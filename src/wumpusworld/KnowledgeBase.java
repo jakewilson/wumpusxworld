@@ -107,6 +107,7 @@ public class KnowledgeBase {
       markAdjCells(x, y, POTENTIAL_WUMPUS + POTENTIAL_PIT);
     }
     foundGold = p.glitter();
+    wg.renderKnowledgeBaseMap(map);
     System.out.println(this);
   }
   

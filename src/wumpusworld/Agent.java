@@ -62,7 +62,15 @@ public class Agent {
     kb.tell(currentPercept, currentX, currentY);
     nextAction = kb.ask();
   }
-  
+
+  /**
+   * Gets the KnowledgeBase that the agent currently has
+   * @return KnowledgeBase kb
+   */
+  public KnowledgeBase getKnowledgeBase(){
+    return kb;
+  }
+
   /**
    * Performs an action and returns a percept after the action has been taken
    * @param a the action to take
