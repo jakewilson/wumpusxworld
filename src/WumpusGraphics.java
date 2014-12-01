@@ -133,7 +133,7 @@ public class WumpusGraphics extends JFrame {
      * Renders the KnowledgeBase map to the screen with respective images
      * @param map Passed KnowledgeBase Map
      */
-    public void renderKnowledgeBaseMap(int[][] map){
+    public void renderKnowledgeBaseMap(int[][] map, int x, int y){
         knowledgeMap = map;
         knowledgePanel.removeAll();
         for(int i = 0; i < 4; i++){
@@ -141,6 +141,12 @@ public class WumpusGraphics extends JFrame {
 
                 JPanel internalGridPanel = new JPanel(new GridLayout(2,2,1,1));
                 internalGridPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+                if(y == i && x == j){
+                    JLabel l = new JLabel(new ImageIcon(HERO_IMG_PATH), JLabel.CENTER);
+                    knowledgePanel.add(l);
+                    continue;
+                }
 
                 if(isState(KnowledgeBase.PIT,i,j)){
                     JLabel l = new JLabel(new ImageIcon(PIT_IMG_PATH), JLabel.CENTER);

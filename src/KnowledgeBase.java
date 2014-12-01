@@ -164,7 +164,7 @@ public class KnowledgeBase {
     if (!foundGold) {
       foundGold = p.glitter();
     }
-    wg.renderKnowledgeBaseMap(map);
+    wg.renderKnowledgeBaseMap(map, agentX, agentY);
     System.out.println(this);
   }
 
