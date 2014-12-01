@@ -27,26 +27,6 @@ public class WumpusGraphics extends JFrame {
         this.setVisible(true);
     }
 
-    public void renderMapTest(){
-
-        JPanel internalGridPanel = new JPanel(new GridLayout(2,2,1,1));
-        JLabel l1 = new JLabel(new ImageIcon(BREEZE_IMG_PATH), JLabel.CENTER);
-        JLabel l2 = new JLabel("2", JLabel.CENTER);
-        JLabel l3 = new JLabel("3", JLabel.CENTER);
-        JLabel l4 = new JLabel("4", JLabel.CENTER);
-        internalGridPanel.add(l1);
-        internalGridPanel.add(l2);
-        internalGridPanel.add(l3);
-        internalGridPanel.add(l4);
-        JLabel l5 = new JLabel("5", JLabel.CENTER);
-        JLabel l6 = new JLabel("6", JLabel.CENTER);
-        JLabel l7 = new JLabel("7", JLabel.CENTER);
-        mapPanel.add(internalGridPanel);
-        mapPanel.add(l5);
-        mapPanel.add(l6);
-        mapPanel.add(l7);
-    }
-
     public void renderMap(Cell[][] map){
         mapPanel.removeAll();
 
@@ -86,6 +66,7 @@ public class WumpusGraphics extends JFrame {
                     l.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
                     internalGridPanel.add(l);
                 }
+                internalGridPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 mapPanel.add(internalGridPanel);
             }
         }
