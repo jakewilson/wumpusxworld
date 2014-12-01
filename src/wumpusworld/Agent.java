@@ -67,7 +67,7 @@ public class Agent {
    */
   public void getNextAction() {
     kb.tell(currentPercept, currentX, currentY);
-//    nextAction 
+    nextAction = kb.ask();
   }
   
   /**
@@ -136,6 +136,14 @@ public class Agent {
    */
   public int getY() {
     return currentY;
+  }
+  
+  /**
+   * Returns the orientation of the Agent
+   * @return the orientation of the Agent
+   */
+  public int getOrientation() {
+    return orientation;
   }
   
   /**

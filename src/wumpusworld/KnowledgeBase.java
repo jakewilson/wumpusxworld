@@ -1,5 +1,7 @@
 package wumpusworld;
 
+import java.awt.Point;
+
 
 /**
  * KnowledgeBase.java
@@ -41,10 +43,35 @@ public class KnowledgeBase {
    * @return the Agents next Action
    */
   public int ask() {
-    if (foundGold) {
+    if (foundGold && !grabbedGold) {
+      grabbedGold = true;
       return Agent.ACTION_GRAB;
     }
+    if (grabbedGold) {
+      // TODO find path back home
+      // TODO climb out if we are home
+    }
+    if (foundWumpus) {
+      // TODO shoot the wumpus
+    }
+    // if none of the above, just move to the next
+    // safe square
+    System.out.println(findNextSafeUnvisitedCell());
     return 0;
+  }
+  
+  /**
+   * Returns the next safe and unvisited cell, or null if there isn't one
+   * @return the next safe and unvisited cell, or null if there isn't one
+   */
+  private Point findNextSafeUnvisitedCell() {
+    for (int i = 0; i < size; i++)
+      for (int j = 0; j < size; j++)
+        // if the cell is safe and not visited
+        if ((map[i][j] & SAFE) != 0 && (map[i][j] & VISITED) == 0)
+          return new Point(i, j);
+    
+    return null;
   }
   
   /**
@@ -55,6 +82,10 @@ public class KnowledgeBase {
    * @param y the y coordinate
    */
   public void tell(Percept p, int x, int y) {
+    // save the agents location
+    agentX = x;
+    agentY = y;
+    // TODO are the two arrays unnecessary?
     breeze[y][x] = p.breeze();
     stench[y][x] = p.stench();
     map[y][x] = SAFE + VISITED;
@@ -68,6 +99,7 @@ public class KnowledgeBase {
     } else if (p.breeze() && p.stench()) {
       markAdjCells(x, y, POTENTIAL_WUMPUS + POTENTIAL_PIT);
     }
+    foundGold = p.glitter();
     System.out.println(this);
   }
   
