@@ -9,8 +9,10 @@ import java.awt.*;
  */
 public class WumpusGraphics extends JFrame {
 
-    private JPanel mapPanel;
-    private String BREEZE_IMG_PATH = "img/breeze.png",
+    public JPanel mapPanel;
+    public JPanel knowledgePanel;
+
+    private static String BREEZE_IMG_PATH = "img/breeze.png",
                           PIT_IMG_PATH = "img/pit.png",
                           HERO_IMG_PATH = "img/hero.png",
                           WUMPUS_IMG_PATH = "img/wumpus.png",
@@ -20,6 +22,7 @@ public class WumpusGraphics extends JFrame {
 
     WumpusGraphics(){
         mapPanel = new JPanel(new GridLayout(4, 4, 3, 3));
+        knowledgePanel = new JPanel(new GridLayout(4,4,3,3));
 
         this.setContentPane(mapPanel);
         this.setSize(400, 400);
@@ -74,4 +77,8 @@ public class WumpusGraphics extends JFrame {
         this.revalidate();
     }
 
+    public void renderKnowledgeBaseMap(int[][] map){
+
+
+    }
 }
