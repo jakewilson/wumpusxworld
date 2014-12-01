@@ -1,5 +1,3 @@
-package wumpusworld;
-
 /**
  * Cell.java
  * 

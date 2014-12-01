@@ -1,6 +1,3 @@
-package wumpusworld;
-
-
 /**
  * Agent.java
  * @author Jake Wilson

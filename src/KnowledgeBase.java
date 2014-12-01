@@ -1,5 +1,3 @@
-package wumpusworld;
-
 import javax.swing.*;
 import java.awt.Point;
 
@@ -133,15 +131,6 @@ public class KnowledgeBase {
    */
   private boolean outOfBounds(int x, int y) {
     return (x < 0 || x >= size) || (y < 0 || y >= size);
-  }
-
-  /**
-   * Returns true if the map at (x,y) is p
-   * @param p the state to test
-   * @return true if the map at (x,y) is p
-   */
-  public boolean isState(int p, int x, int y) {
-    return (map[x][y] & p) != 0;
   }
 
   public String toString() {

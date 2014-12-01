@@ -1,5 +1,3 @@
-package wumpusworld;
-
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
@@ -11,6 +9,7 @@ public class WumpusGraphics extends JFrame {
 
     public JPanel mapPanel;
     public JPanel knowledgePanel;
+    public int[][] knowledgeMap;
 
     private static String BREEZE_IMG_PATH = "img/breeze.png",
                           PIT_IMG_PATH = "img/pit.png",
@@ -78,7 +77,28 @@ public class WumpusGraphics extends JFrame {
     }
 
     public void renderKnowledgeBaseMap(int[][] map){
+        knowledgeMap = map;
 
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                if(isState(KnowledgeBase.PIT,i,j)){
+
+                }
+                if(isState(KnowledgeBase.POTENTIAL_PIT,i,j)){
+
+                }
+            }
+        }
 
     }
+
+    /**
+     * Returns true if the map at (x,y) is p
+     * @param p the state to test
+     * @return true if the map at (x,y) is p
+     */
+    public boolean isState(int p, int x, int y) {
+        return (knowledgeMap[x][y] & p) != 0;
+    }
+
 }
