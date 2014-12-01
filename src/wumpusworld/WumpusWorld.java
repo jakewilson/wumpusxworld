@@ -11,7 +11,9 @@ public class WumpusWorld {
   
   public static void main(String[] args) {
     Environment e = Environment.getEnvironment();
-    e.generateMap();
+    WumpusGraphics wg = new WumpusGraphics();
+    e.generateMap(wg);
+
     System.out.println(e);
     Agent a = new Agent(e);
     System.out.println(a.senseEnv());
