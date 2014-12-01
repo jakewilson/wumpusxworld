@@ -9,11 +9,10 @@ import java.awt.Point;
  */
 public class KnowledgeBase {
 
-  private boolean[][] breeze;
-  private boolean[][] stench;
   private int[][] map;
   private int size;
   private int agentX, agentY;
+  private int wumpusX, wumpusY;
   private int potentialWumpusCount;
   public WumpusGraphics wg;
 
@@ -38,11 +37,10 @@ public class KnowledgeBase {
    */
   public KnowledgeBase(int s) {
     size = s;
-    breeze = new boolean[s][s];
-    stench = new boolean[s][s];
     map = new int[s][s];
     foundWumpus = foundGold = grabbedGold = wumpusDead = false;
     agentX = agentY = 0;
+    wumpusX = wumpusY = -1;
     potentialWumpusCount = 0;
   }
 
@@ -59,6 +57,7 @@ public class KnowledgeBase {
     if (foundWumpus && !wumpusDead) {
       System.out.println("Need to kill the wumpus");
       // TODO shoot the wumpus
+      return Agent.ACTION_SHOOT;
     }
     if (grabbedGold) {
       System.out.println("Find way back home");
@@ -112,9 +111,6 @@ public class KnowledgeBase {
     // save the agents location
     agentX = x;
     agentY = y;
-    // TODO are the two arrays unnecessary?
-    breeze[y][x] = p.breeze();
-    stench[y][x] = p.stench();
     map[y][x] = SAFE + VISITED;
     if (!p.breeze() && !p.stench()) {
       // if no stench or breeze in the current cell, all adj cells are safe
@@ -137,7 +133,7 @@ public class KnowledgeBase {
         }
       }
     }
-    if (potentialWumpusCount == 1) {
+    if (potentialWumpusCount == 1 && !foundWumpus) {
       // find the potential wumpus and change it to wumpus
       System.out.println("Found the wumpus!");
       foundWumpus = true;
@@ -151,7 +147,12 @@ public class KnowledgeBase {
         }
       }
     }
-    foundGold = p.glitter();
+    if (!wumpusDead) {
+      wumpusDead = p.scream();
+    }
+    if (!foundGold) {
+      foundGold = p.glitter();
+    }
     wg.renderKnowledgeBaseMap(map);
     System.out.println(this);
   }
@@ -221,6 +222,22 @@ public class KnowledgeBase {
    */
   private boolean contains(int cell, int status) {
     return (cell & status) != 0;
+  }
+
+  /**
+   * Returns the x coordinate of the wumpus
+   * @return the x coordinate of the wumpus
+   */
+  public int getWumpusX() {
+    return wumpusX;
+  }
+
+  /**
+   * Returns the y coordinate of the wumpus
+   * @return the y coordinate of the wumpus
+   */
+  public int getWumpusY() {
+    return wumpusY;
   }
 
   /**
