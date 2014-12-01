@@ -12,6 +12,8 @@ public class Environment {
   private Cell[][] map;
   
   private boolean mapGenerated;
+
+  private boolean emitScream;
   
   private static boolean envCreated = false;
   
@@ -32,6 +34,7 @@ public class Environment {
     mapGenerated = false;
     initMap(map);
     envCreated = true;
+    emitScream = false;
   }
   
   /**
@@ -43,6 +46,21 @@ public class Environment {
       return e = new Environment(SIZE);
     
     return e;
+  }
+
+  /**
+   * Takes a shot at the wumpus. If the wumpus dies, a scream
+   * is emitted during the next percept
+   * @param x the x coordinate of the wumpus
+   * @param y the y coordinate of the wumpus
+   */
+  public void shootWumpus(int x, int y) {
+    if (map[y][x].contains(Cell.WUMPUS)) {
+      map[y][x].removeContent(Cell.WUMPUS);
+      // remove stenches from adjacent cells
+      removeAdjacentPercepts(x, y, Cell.STENCH);
+      emitScream = true;
+    }
   }
   
   /**
@@ -60,6 +78,7 @@ public class Environment {
     if (c.contains(Cell.BREEZE)) p += Percept.PERCEPT_BREEZE;
     if (c.contains(Cell.STENCH)) p += Percept.PERCEPT_STENCH;
     if (c.contains(Cell.GLITTER)) p += Percept.PERCEPT_GLITTER;
+    if (emitScream) p+= Percept.PERCEPT_SCREAM;
     return new Percept(p);
   }
   
@@ -131,6 +150,19 @@ public class Environment {
    */
   private boolean validWumpusCoord(int x, int y) {
     return !(x == 0 && y == 0) && !(x == 0 && y == 1) && !(x == 1 && y == 0);
+  }
+
+  /**
+   * Removes the percept p from all adjacent cells of (x,y)
+   * @param x the x coordinate
+   * @param y the y coordinate
+   * @param p the percept to remove
+   */
+  private void removeAdjacentPercepts(int x, int y, int p) {
+    if (!outOfBounds(x + 1, y)) map[x + 1][y].removeContent(p);
+    if (!outOfBounds(x - 1, y)) map[x - 1][y].removeContent(p);
+    if (!outOfBounds(x, y + 1)) map[x][y + 1].removeContent(p);
+    if (!outOfBounds(x, y - 1)) map[x][y - 1].removeContent(p);
   }
   
   /**

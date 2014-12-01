@@ -19,7 +19,7 @@ public class WumpusWorld {
 
     Scanner input = new Scanner(System.in);
     String line = "";
-    while (!(line = input.nextLine()).equals("q")) {
+    while (!a.hasEscaped() && !(line = input.nextLine()).equals("q")) {
       System.out.println(a.senseEnv());
       a.getNextAction();
       a.takeAction();

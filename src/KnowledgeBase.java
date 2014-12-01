@@ -62,9 +62,11 @@ public class KnowledgeBase {
     }
     if (grabbedGold) {
       System.out.println("Find way back home");
-      // TODO find path back home
-      // TODO climb out if we are home
-      p = new Point(0,0);
+      if (agentX == 0 && agentY == 0) {
+        return Agent.ACTION_CLIMB;
+      } else {
+        p = new Point(0, 0);
+      }
     } else {
       // if none of the above, just move to the next
       // safe square
@@ -123,6 +125,17 @@ public class KnowledgeBase {
     }
     if (p.stench()) {
       markAdjCells(x, y, POTENTIAL_WUMPUS);
+      // any potential wumpus' that are not adjacent
+      // TODO as long as there is not a pit
+      // to (x,y) are now marked unknown
+      for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+          if (contains(map[i][j], POTENTIAL_WUMPUS) && !isAdjacent(x, y, j, i)) {
+            map[i][j] = UNKNOWN;
+            potentialWumpusCount--;
+          }
+        }
+      }
     }
     if (potentialWumpusCount == 1) {
       // find the potential wumpus and change it to wumpus
@@ -141,6 +154,21 @@ public class KnowledgeBase {
     foundGold = p.glitter();
     wg.renderKnowledgeBaseMap(map);
     System.out.println(this);
+  }
+
+  /**
+   * Returns true if (x2,y2) is adjacent to (x1,y1)
+   * @param x1 the first x coordinate
+   * @param y1 the first y coordinate
+   * @param x2 the second x coordinate
+   * @param y2 the second y coordinate
+   * @return true if (x2,y2) is adjacent to (x1,y1)
+   */
+  private boolean isAdjacent(int x1, int y1, int x2, int y2) {
+    return  (x2 == (x1 + 1) && y1 == y2) ||
+            (x2 == (x1 - 1) && y1 == y2) ||
+            (x2 == x1 && (y2 == y1 + 1)) ||
+            (x2 == x1 && (y2 == y1 - 1));
   }
 
   /**

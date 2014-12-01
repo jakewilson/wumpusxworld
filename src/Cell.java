@@ -31,6 +31,15 @@ public class Cell {
     if (!contains(c))
       content += c;
   }
+
+  /**
+   * Removes content from the cell
+   * @param c the content to remove
+   */
+  public void removeContent(int c) {
+    if (contains(c))
+      content -= c;
+  }
   
   /**
    * Returns true if the cell contains p

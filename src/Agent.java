@@ -7,7 +7,7 @@ public class Agent {
   
   private Cell[][] knownMap;
   private Environment env;
-  private boolean hasArrow, hasGold;
+  private boolean hasArrow, hasGold, hasEscaped;
   private int currentX, currentY;
   private int performanceMeasure;
   private int time;
@@ -36,7 +36,7 @@ public class Agent {
     env = e;
     kb = new KnowledgeBase(e.getSize());
     hasArrow = true;
-    hasGold = false;
+    hasGold = hasEscaped = false;
     currentX = currentY = performanceMeasure = time = 0;
     currentPercept = null;
   }
@@ -95,14 +95,24 @@ public class Agent {
       case ACTION_GRAB:
         System.out.println("Grabbing gold");
         hasGold = true;
+        performanceMeasure += 1000;
         break;
       case ACTION_CLIMB:
         System.out.println("Climbing from cave.");
+        hasEscaped = true;
         break;
       default: // should be impossible
         break;
     }
     performanceMeasure--;
+  }
+
+  /**
+   * Returns whether the agent has escaped the cave
+   * @return whether the agent has escaped the cave
+   */
+  public boolean hasEscaped() {
+    return hasEscaped;
   }
   
   /**
