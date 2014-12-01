@@ -20,6 +20,8 @@ public class Environment {
   public static final int SIZE = 4;
   
   private static Environment e;
+
+  private WumpusGraphics graphics;
   
   /**
    * Constructs and initializes a new Environment with a map size
@@ -80,11 +82,13 @@ public class Environment {
    * a wumpus or gold, and is not the starting cell can contain a pit with
    * P(.2)
    */
-  public void generateMap() {
+  public void generateMap(WumpusGraphics wg) {
     if (!mapGenerated) { // ensure we only generate the map once
       // generate exactly one wumpus
       int wX, wY;
-      
+
+      graphics = wg;
+
       do {
         wX = (int)(Math.random() * 4);
         wY = (int)(Math.random() * 4);
@@ -109,7 +113,7 @@ public class Environment {
           }
         }
       }
-      
+      wg.renderMap(map);
       mapGenerated = true;
     }
   }
