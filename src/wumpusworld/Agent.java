@@ -15,7 +15,6 @@ public class Agent {
   private int prevX, prevY;
   private int performanceMeasure;
   private int time;
-  private int orientation;
   
   private Percept currentPercept;
   
@@ -31,12 +30,6 @@ public class Agent {
                            ACTION_GRAB       = 5,
                            ACTION_CLIMB      = 6;
   
-  /** Possible orientations of the Agent */
-  public static final int ORIENTATION_NORTH = 1,
-                          ORIENTATION_EAST  = 2,
-                          ORIENTATION_SOUTH = 3,
-                          ORIENTATION_WEST  = 4;
-  
   /**
    * Constructs and initializes a new Agent with Environment equal to e
    * and with the Agent facing East
@@ -49,7 +42,6 @@ public class Agent {
     hasGold = false;
     currentX = currentY = performanceMeasure = time = 0;
     prevX = prevY = 0;
-    orientation = ORIENTATION_EAST;
     currentPercept = null;
   }
   
@@ -138,18 +130,6 @@ public class Agent {
     return currentY;
   }
   
-  /**
-   * Returns the orientation of the Agent
-   * @return the orientation of the Agent
-   */
-  public int getOrientation() {
-    return orientation;
-  }
-
-  public KnowledgeBase getKnowledgeBase(){
-    return kb;
-  }
-
   /**
    * Returns the coordinate of the Agent
    */
