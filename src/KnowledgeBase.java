@@ -25,6 +25,8 @@ public class KnowledgeBase {
                           PIT               = 16,
                           VISITED           = 32;
 
+  // TODO add NO_PIT
+
   private boolean foundWumpus;
   private boolean foundGold;
   private boolean grabbedGold;
@@ -154,6 +156,9 @@ public class KnowledgeBase {
     }
     if (!wumpusDead) {
       wumpusDead = p.scream();
+      if (p.scream()) {
+        map[wumpusY][wumpusX] = SAFE;
+      }
     }
     if (!foundGold) {
       foundGold = p.glitter();

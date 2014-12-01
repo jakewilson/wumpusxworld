@@ -78,7 +78,10 @@ public class Environment {
     if (c.contains(Cell.BREEZE)) p += Percept.PERCEPT_BREEZE;
     if (c.contains(Cell.STENCH)) p += Percept.PERCEPT_STENCH;
     if (c.contains(Cell.GLITTER)) p += Percept.PERCEPT_GLITTER;
-    if (emitScream) p+= Percept.PERCEPT_SCREAM;
+    if (emitScream) {
+      p += Percept.PERCEPT_SCREAM;
+      emitScream = false;
+    }
     return new Percept(p);
   }
   
