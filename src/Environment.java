@@ -60,7 +60,7 @@ public class Environment {
       System.out.println("(" + x + "," + y + ") contains a wumpus.");
       map[y][x].removeContent(Cell.WUMPUS);
       // remove stenches from adjacent cells
-      removeAdjacentPercepts(x, y, Cell.STENCH);
+      removeAdjacentPercepts(y, x, Cell.STENCH);
       emitScream = true;
 
     }

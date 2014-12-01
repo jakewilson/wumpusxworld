@@ -210,6 +210,8 @@ public class KnowledgeBase {
         foundWumpus = true;
         wumpusX = x;
         wumpusY = y + 1;
+      } else if (state == POTENTIAL_PIT) {
+        map[y + 1][x] = PIT;
       }
     }
     if (!outOfBounds(y - 1, x) && !contains(map[y - 1][x], SAFE) && !contains(map[y - 1][x], state)) {
@@ -226,11 +228,15 @@ public class KnowledgeBase {
     } else if (!outOfBounds(y - 1, x) && !contains(map[y - 1][x], SAFE) && contains(map[y - 1][x], state)) {
       // if the cell already contains a potential wumpus and we're trying to add a potential wumpus
       // to it, it IS the wumpus
+      // likewise, if the cell already contains a potential pit and we're trying to add a
+      // potential pit, it IS a pit
       if (state == POTENTIAL_WUMPUS) {
         state = WUMPUS;
         foundWumpus = true;
         wumpusX = x;
         wumpusY = y - 1;
+      } else if (state == POTENTIAL_PIT) {
+        map[y - 1][x] = PIT;
       }
     }
     if (!outOfBounds(y, x + 1) && !contains(map[y][x + 1], SAFE) && !contains(map[y][x + 1], state)) {
@@ -252,6 +258,8 @@ public class KnowledgeBase {
         foundWumpus = true;
         wumpusX = x + 1;
         wumpusY = y;
+      } else if (state == POTENTIAL_PIT) {
+        map[y][x + 1] = PIT;
       }
     }
     if (!outOfBounds(y, x - 1) && !contains(map[y][x - 1], SAFE) && !contains(map[y][x - 1], state)) {
@@ -273,6 +281,8 @@ public class KnowledgeBase {
         foundWumpus = true;
         wumpusX = x - 1;
         wumpusY = y;
+      } else if (state == POTENTIAL_PIT) {
+        map[y][x - 1] = PIT;
       }
     }
   }
