@@ -127,7 +127,7 @@ public class WumpusGraphics extends JFrame {
 
     public void renderKnowledgeBaseMap(int[][] map){
         knowledgeMap = map;
-
+        knowledgePanel.removeAll();
         for(int i = 0; i < 4; i++){
             for(int j = 0; j < 4; j++){
 
