@@ -20,6 +20,10 @@ public class WumpusGraphics extends JFrame {
                           STENCH_IMG_PATH = "img/stench.png",
                           EMPTY_IMG_PATH = "img/space.png";
 
+    /**
+     * Constructs the WumpusGraphics Object
+     * - Creates headers and map panels
+     */
     WumpusGraphics(){
         mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -76,7 +80,7 @@ public class WumpusGraphics extends JFrame {
 
     /**
      * Renders the Environment Map to the screen with respective images
-     * @param map
+     * @param map Passed Environment Map
      */
     public void renderMap(Cell[][] map){
         mapPanel.removeAll();
@@ -125,6 +129,10 @@ public class WumpusGraphics extends JFrame {
         this.revalidate();
     }
 
+    /**
+     * Renders the KnowledgeBase map to the screen with respective images
+     * @param map Passed KnowledgeBase Map
+     */
     public void renderKnowledgeBaseMap(int[][] map){
         knowledgeMap = map;
         knowledgePanel.removeAll();
