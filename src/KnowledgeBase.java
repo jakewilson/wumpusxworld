@@ -8,14 +8,14 @@ import java.awt.Point;
  * @version Nov 30, 2014
  */
 public class KnowledgeBase {
-  
+
   private boolean[][] breeze;
   private boolean[][] stench;
   private int[][] map;
   private int size;
   private int agentX, agentY;
   public WumpusGraphics wg;
-  
+
   /** Possible states of a cell */
   public static final int UNKNOWN           = 0,
                           SAFE              = 1,
@@ -24,11 +24,11 @@ public class KnowledgeBase {
                           WUMPUS            = 8,
                           PIT               = 16,
                           VISITED           = 32;
-  
+
   private boolean foundWumpus;
   private boolean foundGold;
   private boolean grabbedGold;
-  
+
   /**
    * Constructs and initializes a new KnowledgeBase with
    * a known map of size s
@@ -42,7 +42,7 @@ public class KnowledgeBase {
     foundWumpus = foundGold = grabbedGold = false;
     agentX = agentY = 0;
   }
-  
+
   /**
    * Returns the Agents next Action
    * @return the Agents next Action
@@ -53,18 +53,36 @@ public class KnowledgeBase {
       return Agent.ACTION_GRAB;
     }
     if (grabbedGold) {
+      System.out.println("Find way back home");
       // TODO find path back home
       // TODO climb out if we are home
     }
     if (foundWumpus) {
+      System.out.println("Find way back home");
       // TODO shoot the wumpus
     }
     // if none of the above, just move to the next
     // safe square
     Point p = findNextSafeUnvisitedCell();
-    return 0;
+
+    System.out.println("Next safe cell: " + p);
+
+    if (p == null) {
+      System.out.println("There are no more safe unvisited cells");
+    }
+
+    if (p.x - agentX > 0)
+      return Agent.ACTION_MOVE_EAST;
+    else if (p.x - agentX < 0)
+      return Agent.ACTION_MOVE_WEST;
+    else if (p.y - agentY > 0)
+      return Agent.ACTION_MOVE_SOUTH;
+    else if (p.y - agentY < 0)
+      return Agent.ACTION_MOVE_NORTH;
+
+    return -1;
   }
-  
+
   /**
    * Returns the next safe and unvisited cell, or null if there isn't one
    * @return the next safe and unvisited cell, or null if there isn't one
@@ -75,10 +93,10 @@ public class KnowledgeBase {
         // if the cell is safe and not visited
         if ((map[j][i] & SAFE) != 0 && (map[j][i] & VISITED) == 0)
           return new Point(j, i);
-    
+
     return null;
   }
-  
+
   /**
    * Tells the Knowledge Base a percept and the coordinate it was received. The KB
    * will then infer facts based on the percept.
@@ -108,7 +126,7 @@ public class KnowledgeBase {
     wg.renderKnowledgeBaseMap(map);
     System.out.println(this);
   }
-  
+
   /**
    * Marks all the adj cells to (x,y) as status if they're not already
    * safe
@@ -117,12 +135,26 @@ public class KnowledgeBase {
    * @param state the state of the cell
    */
   private void markAdjCells(int x, int y, int state) {
-    if (!outOfBounds(x + 1, y) && map[x + 1][y] != SAFE) map[x + 1][y] += state;
-    if (!outOfBounds(x - 1, y) && map[x - 1][y] != SAFE) map[x - 1][y] += state;
-    if (!outOfBounds(x, y + 1) && map[x][y + 1] != SAFE) map[x][y + 1] += state;
-    if (!outOfBounds(x, y - 1) && map[x][y - 1] != SAFE) map[x][y - 1] += state;
+    if (!outOfBounds(y + 1, x) && !contains(map[y + 1][x], SAFE) && !contains(map[y + 1][x], state))
+      map[y + 1][x] += state;
+    if (!outOfBounds(y - 1, x) && !contains(map[y - 1][x], SAFE) && !contains(map[y - 1][x], state))
+      map[y - 1][x] += state;
+    if (!outOfBounds(y, x + 1) && !contains(map[y][x + 1], SAFE) && !contains(map[y][x + 1], state))
+      map[y][x + 1] += state;
+    if (!outOfBounds(y, x - 1) && !contains(map[y][x - 1], SAFE) && !contains(map[y][x - 1], state))
+      map[y][x - 1] += state;
   }
-  
+
+  /**
+   * Returns true if the cell contains status
+   * @param status the status to check
+   * @param cell the cell to check
+   * @return true if the cell contains status
+   */
+  private boolean contains(int cell, int status) {
+    return (cell & status) != 0;
+  }
+
   /**
    * Returns true if the coordinate (x,y) is out of Bounds
    * @param x the x coordinate
@@ -142,7 +174,7 @@ public class KnowledgeBase {
       }
       str += "\n" + Environment.getDashes(size);
     }
-  
+
     return str;
   }
 

@@ -17,6 +17,15 @@ public class WumpusWorld {
 
     System.out.println(a.senseEnv());
     a.getNextAction();
+    a.takeAction();
+
+    System.out.println(a.senseEnv());
+    a.getNextAction();
+    a.takeAction();
+
+    System.out.println(a.senseEnv());
+    a.getNextAction();
+    a.takeAction();
   }
 
 }

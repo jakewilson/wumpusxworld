@@ -72,8 +72,6 @@ public class Environment {
         map[i][j] = new Cell();
   }
   
-//  public Percept 
-  
   /**
    * Generates the map of the environment. There is exactly one wumpus
    * and one piece of gold in the map. Also, each cell that does not contain
@@ -104,7 +102,6 @@ public class Environment {
         for (int j = 0; j < map[i].length; j++) {
           if (!map[i][j].contains(Cell.WUMPUS) && !map[i][j].contains(Cell.GLITTER)) {
             if (Math.random() <= 0.2 && validPitCoord(i, j)) {
-              System.out.println(i + " " + j);
               map[i][j].addContent(Cell.PIT);
               addAdjacentPercepts(i, j, Cell.BREEZE);
             }

@@ -9,7 +9,6 @@ public class Agent {
   private Environment env;
   private boolean hasArrow, hasGold;
   private int currentX, currentY;
-  private int prevX, prevY;
   private int performanceMeasure;
   private int time;
   
@@ -39,7 +38,6 @@ public class Agent {
     hasArrow = true;
     hasGold = false;
     currentX = currentY = performanceMeasure = time = 0;
-    prevX = prevY = 0;
     currentPercept = null;
   }
   
@@ -58,6 +56,7 @@ public class Agent {
   public void getNextAction() {
     kb.tell(currentPercept, currentX, currentY);
     nextAction = kb.ask();
+    System.out.println(nextAction);
   }
 
   /**
@@ -69,42 +68,34 @@ public class Agent {
   }
 
   /**
-   * Performs an action and returns a percept after the action has been taken
-   * @param a the action to take
-   * @return the percept of the cell the agent is at
+   * Performs an action
    */
-  /*public Percept takeAction(int a) {
-    prevX = currentX;
-    prevY = currentY;
-    switch (a) {
-      case ACTION_FORWARD:
+  public void takeAction() {
+    System.out.println("(" + currentX + "," + currentY + ")");
+    switch (nextAction) {
+      case ACTION_MOVE_NORTH:
+        currentY--;
         break;
-      case ACTION_TURN_LEFT:
-        orientation--;
-        if (orientation == 0) orientation = ORIENTATION_WEST;
+      case ACTION_MOVE_EAST:
+        currentX++;
         break;
-      case ACTION_TURN_RIGHT:
-        orientation++;
-        if (orientation == 5) orientation = ORIENTATION_NORTH;
+      case ACTION_MOVE_SOUTH:
+        currentY++;
+        break;
+      case ACTION_MOVE_WEST:
+        currentX--;
         break;
       case ACTION_SHOOT:
         break;
       case ACTION_GRAB:
+        hasGold = true;
         break;
       case ACTION_CLIMB:
         break;
       default: // should be impossible
-        return null;
+        break;
     }
-    // subtract one for every action taken
-    performanceMeasure--;
-    Percept p = env.getPercept(currentY, currentX);
-    if (p.bump()) {
-      currentX = prevX;
-      currentY = prevY;
-    }
-    return p;
-  }*/
+  }
   
   /**
    * Returns the x coordinate of the Agent
