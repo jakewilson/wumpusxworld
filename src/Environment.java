@@ -55,11 +55,14 @@ public class Environment {
    * @param y the y coordinate of the wumpus
    */
   public void shootWumpus(int x, int y) {
+    System.out.println("In shoot wumpus...");
     if (map[y][x].contains(Cell.WUMPUS)) {
+      System.out.println("(" + x + "," + y + ") contains a wumpus.");
       map[y][x].removeContent(Cell.WUMPUS);
       // remove stenches from adjacent cells
       removeAdjacentPercepts(x, y, Cell.STENCH);
       emitScream = true;
+
     }
   }
   

@@ -55,9 +55,9 @@ public class Agent {
    */
   public Percept senseEnv() {
     if ((currentPercept = env.getPercept(currentY, currentX)).dead()) {
-
+      isDead = true;
     }
-    return currentPercept = env.getPercept(currentY, currentX);
+    return currentPercept;
   }
   
   /**

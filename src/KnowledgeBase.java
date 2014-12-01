@@ -57,7 +57,7 @@ public class KnowledgeBase {
       return Agent.ACTION_GRAB;
     }
     if (foundWumpus && !wumpusDead) {
-      System.out.println("Need to kill the wumpus");
+      System.out.println("Need to kill the wumpus at (" + wumpusX + "," + wumpusY + ")");
       return Agent.ACTION_SHOOT;
     }
     if (grabbedGold) {
