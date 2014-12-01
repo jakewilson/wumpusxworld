@@ -145,7 +145,11 @@ public class Agent {
   public int getOrientation() {
     return orientation;
   }
-  
+
+  public KnowledgeBase getKnowledgeBase(){
+    return kb;
+  }
+
   /**
    * Returns the coordinate of the Agent
    */

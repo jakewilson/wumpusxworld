@@ -16,6 +16,8 @@ public class WumpusWorld {
 
     System.out.println(e);
     Agent a = new Agent(e);
+    a.getKnowledgeBase().wg = wg;
+
     System.out.println(a.senseEnv());
     a.getNextAction();
   }
