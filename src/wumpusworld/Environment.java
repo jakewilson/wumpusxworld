@@ -169,7 +169,7 @@ public class Environment {
    * Returns the appropriate number of dashes for the environment toString()
    * @return
    */
-  private String getDashes() {
+  public static String getDashes(int size) {
     String str = "";
     for (int i = 0; i <= (size * 3); i++)
       str += "-";
@@ -181,13 +181,13 @@ public class Environment {
    * Returns the map of the environment in string form
    */
   public String toString() {
-    String str = getDashes();
+    String str = getDashes(size);
     for (int i = 0; i < size; i++) {
       str += "|";
       for (int j = 0; j < size; j++) {
         str += map[i][j].toString() + "|";
       }
-      str += "\n" + getDashes();
+      str += "\n" + getDashes(size);
     }
     
     return str;

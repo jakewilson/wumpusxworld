@@ -17,7 +17,11 @@ public class Agent {
   private int time;
   private int orientation;
   
-//  private KnowledgeBase kb;
+  private Percept currentPercept;
+  
+  private int nextAction;
+  
+  private KnowledgeBase kb;
   
   /** Possible Actions for the Agent to take */
   public static final int  ACTION_FORWARD    = 1,
@@ -40,13 +44,30 @@ public class Agent {
    */
   public Agent(Environment e) {
     env = e;
-    knownMap = new Cell[e.getSize()][e.getSize()];
-    Environment.initMap(knownMap);
+    kb = new KnowledgeBase(e.getSize());
     hasArrow = true;
     hasGold = false;
     currentX = currentY = performanceMeasure = time = 0;
     prevX = prevY = 0;
     orientation = ORIENTATION_EAST;
+    currentPercept = null;
+  }
+  
+  /**
+   * Senses the environment and returns the percept it sensed
+   * @return the percept it sensed
+   */
+  public Percept senseEnv() {
+    return currentPercept = env.getPercept(currentY, currentX);
+  }
+  
+  /**
+   * Tells the Knowledge Base the current Percept and asks it for
+   * the next action to take
+   */
+  public void getNextAction() {
+    kb.tell(currentPercept, currentX, currentY);
+//    nextAction 
   }
   
   /**
@@ -54,7 +75,7 @@ public class Agent {
    * @param a the action to take
    * @return the percept of the cell the agent is at
    */
-  public Percept takeAction(int a) {
+  /*public Percept takeAction(int a) {
     prevX = currentX;
     prevY = currentY;
     switch (a) {
@@ -99,7 +120,7 @@ public class Agent {
       currentY = prevY;
     }
     return p;
-  }
+  }*/
   
   /**
    * Returns the coordinate of the Agent
