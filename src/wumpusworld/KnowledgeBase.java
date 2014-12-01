@@ -29,6 +29,11 @@ public class KnowledgeBase {
   private boolean foundGold;
   private boolean grabbedGold;
   
+  /**
+   * Constructs and initializes a new KnowledgeBase with
+   * a known map of size s
+   * @param s the size of the known map
+   */
   public KnowledgeBase(int s) {
     size = s;
     breeze = new boolean[s][s];
@@ -56,7 +61,7 @@ public class KnowledgeBase {
     }
     // if none of the above, just move to the next
     // safe square
-    System.out.println(findNextSafeUnvisitedCell());
+    Point p = findNextSafeUnvisitedCell();
     return 0;
   }
   

@@ -23,12 +23,13 @@ public class Agent {
   private KnowledgeBase kb;
   
   /** Possible Actions for the Agent to take */
-  public static final int  ACTION_FORWARD    = 1,
-                           ACTION_TURN_LEFT  = 2,
-                           ACTION_TURN_RIGHT = 3,
-                           ACTION_SHOOT      = 4,
-                           ACTION_GRAB       = 5,
-                           ACTION_CLIMB      = 6;
+  public static final int  ACTION_MOVE_NORTH = 1,
+                           ACTION_MOVE_EAST  = 2,
+                           ACTION_MOVE_SOUTH = 3,
+                           ACTION_MOVE_WEST  = 4,
+                           ACTION_SHOOT      = 5,
+                           ACTION_GRAB       = 6,
+                           ACTION_CLIMB      = 7;
   
   /**
    * Constructs and initializes a new Agent with Environment equal to e
