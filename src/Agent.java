@@ -7,7 +7,7 @@ public class Agent {
   
   private Cell[][] knownMap;
   private Environment env;
-  private boolean hasArrow, hasGold, hasEscaped;
+  private boolean hasArrow, hasGold, hasEscaped, isDead;
   private int currentX, currentY;
   private int performanceMeasure;
   private int time;
@@ -36,9 +36,17 @@ public class Agent {
     env = e;
     kb = new KnowledgeBase(e.getSize());
     hasArrow = true;
-    hasGold = hasEscaped = false;
+    hasGold = hasEscaped = isDead = false;
     currentX = currentY = performanceMeasure = time = 0;
     currentPercept = null;
+  }
+
+  /**
+   * Returns whether the agent is dead
+   * @return whether the agent is dead
+   */
+  public boolean isDead() {
+    return isDead;
   }
   
   /**
@@ -46,6 +54,9 @@ public class Agent {
    * @return the percept it sensed
    */
   public Percept senseEnv() {
+    if ((currentPercept = env.getPercept(currentY, currentX)).dead()) {
+
+    }
     return currentPercept = env.getPercept(currentY, currentX);
   }
   

@@ -19,10 +19,17 @@ public class WumpusWorld {
 
     Scanner input = new Scanner(System.in);
     String line = "";
-    while (!a.hasEscaped() && !(line = input.nextLine()).equals("q")) {
+    while (!a.hasEscaped() && !a.isDead() && !(line = input.nextLine()).equals("q")) {
       System.out.println(a.senseEnv());
       a.getNextAction();
       a.takeAction();
+    }
+    if (a.isDead()) {
+      System.out.println("The Agent has died!");
+    }
+
+    if (a.hasEscaped()) {
+      System.out.println("The Agent has escaped!");
     }
   }
 

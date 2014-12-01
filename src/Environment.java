@@ -75,6 +75,9 @@ public class Environment {
     
     int p = 0;
     Cell c = map[y][x];
+    if (c.contains(Cell.PIT) || c.contains(Cell.WUMPUS)) {
+      return new Percept(Percept.PERCEPT_DEAD);
+    }
     if (c.contains(Cell.BREEZE)) p += Percept.PERCEPT_BREEZE;
     if (c.contains(Cell.STENCH)) p += Percept.PERCEPT_STENCH;
     if (c.contains(Cell.GLITTER)) p += Percept.PERCEPT_GLITTER;

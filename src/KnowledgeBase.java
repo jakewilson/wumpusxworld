@@ -158,6 +158,7 @@ public class KnowledgeBase {
       wumpusDead = p.scream();
       if (p.scream()) {
         map[wumpusY][wumpusX] = SAFE;
+        potentialWumpusCount = 0;
       }
     }
     if (!foundGold) {
@@ -201,6 +202,15 @@ public class KnowledgeBase {
         map[y + 1][x] += state;
       }
       if (state == POTENTIAL_WUMPUS) potentialWumpusCount++;
+    } else if (!outOfBounds(y + 1, x) && !contains(map[y + 1][x], SAFE) && contains(map[y + 1][x], state)) {
+      // if the cell already contains a potential wumpus and we're trying to add a potential wumpus
+      // to it, it IS the wumpus
+      if (state == POTENTIAL_WUMPUS) {
+        state = WUMPUS;
+        foundWumpus = true;
+        wumpusX = x;
+        wumpusY = y + 1;
+      }
     }
     if (!outOfBounds(y - 1, x) && !contains(map[y - 1][x], SAFE) && !contains(map[y - 1][x], state)) {
       if (state != POTENTIAL_WUMPUS && contains(map[y - 1][x], POTENTIAL_WUMPUS)) {
@@ -213,6 +223,15 @@ public class KnowledgeBase {
         map[y - 1][x] += state;
       }
       if (state == POTENTIAL_WUMPUS) potentialWumpusCount++;
+    } else if (!outOfBounds(y - 1, x) && !contains(map[y - 1][x], SAFE) && contains(map[y - 1][x], state)) {
+      // if the cell already contains a potential wumpus and we're trying to add a potential wumpus
+      // to it, it IS the wumpus
+      if (state == POTENTIAL_WUMPUS) {
+        state = WUMPUS;
+        foundWumpus = true;
+        wumpusX = x;
+        wumpusY = y - 1;
+      }
     }
     if (!outOfBounds(y, x + 1) && !contains(map[y][x + 1], SAFE) && !contains(map[y][x + 1], state)) {
       if (state != POTENTIAL_WUMPUS && contains(map[y][x + 1], POTENTIAL_WUMPUS)) {
@@ -225,6 +244,15 @@ public class KnowledgeBase {
         map[y][x + 1] += state;
       }
       if (state == POTENTIAL_WUMPUS) potentialWumpusCount++;
+    } else if (!outOfBounds(y, x + 1) && !contains(map[y][x + 1], SAFE) && contains(map[y][x + 1], state)) {
+      // if the cell already contains a potential wumpus and we're trying to add a potential wumpus
+      // to it, it IS the wumpus
+      if (state == POTENTIAL_WUMPUS) {
+        state = WUMPUS;
+        foundWumpus = true;
+        wumpusX = x + 1;
+        wumpusY = y;
+      }
     }
     if (!outOfBounds(y, x - 1) && !contains(map[y][x - 1], SAFE) && !contains(map[y][x - 1], state)) {
       if (state != POTENTIAL_WUMPUS && contains(map[y][x - 1], POTENTIAL_WUMPUS)) {
@@ -237,6 +265,15 @@ public class KnowledgeBase {
         map[y][x - 1] += state;
       }
       if (state == POTENTIAL_WUMPUS) potentialWumpusCount++;
+    } else if (!outOfBounds(y, x - 1) && !contains(map[y][x - 1], SAFE) && contains(map[y][x - 1], state)) {
+      // if the cell already contains a potential wumpus and we're trying to add a potential wumpus
+      // to it, it IS the wumpus
+      if (state == POTENTIAL_WUMPUS) {
+        state = WUMPUS;
+        foundWumpus = true;
+        wumpusX = x - 1;
+        wumpusY = y;
+      }
     }
   }
 

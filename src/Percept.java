@@ -15,7 +15,8 @@ public class Percept {
                           PERCEPT_BUMP    = 2,
                           PERCEPT_GLITTER = 4,
                           PERCEPT_BREEZE  = 8,
-                          PERCEPT_STENCH  = 16;
+                          PERCEPT_STENCH  = 16,
+                          PERCEPT_DEAD    = 32;
   
   /**
    * Constructs and initializes a new Percept equal to p
@@ -23,6 +24,14 @@ public class Percept {
    */
   public Percept(int p) {
     percept = p;
+  }
+
+  /**
+   * Returns whether the agent is dead or not
+   * @return whether the agent is dead or not
+   */
+  public boolean dead() {
+    return (percept & PERCEPT_DEAD) != 0;
   }
   
   /**
