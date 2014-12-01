@@ -68,8 +68,8 @@ public class KnowledgeBase {
     for (int i = 0; i < size; i++)
       for (int j = 0; j < size; j++)
         // if the cell is safe and not visited
-        if ((map[i][j] & SAFE) != 0 && (map[i][j] & VISITED) == 0)
-          return new Point(i, j);
+        if ((map[j][i] & SAFE) != 0 && (map[j][i] & VISITED) == 0)
+          return new Point(j, i);
     
     return null;
   }
